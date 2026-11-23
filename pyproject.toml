@@ -1,0 +1,6 @@
+[project]
+name = "caldeiras-api"
+requires-python = ">=3.11"
+
+[tool.vercel]
+entrypoint = "app.main:app"
