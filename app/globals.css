@@ -1,0 +1,160 @@
+:root {
+  --bg: #0b1728;
+  --panel: #111f33;
+  --border: #26405f;
+  --text: #e6edf3;
+  --muted: #98abc0;
+  --accent: #1689d8;
+  --accent-dark: #103d83;
+  --ok: #2ea043;
+  --warn: #d29922;
+  --danger: #f85149;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.brand-logo {
+  display: block;
+  width: min(420px, 70vw);
+  max-height: 90px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.card h2 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+
+.card .sub {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.metric .value {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.metric .label {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.badge.normal { background: rgba(46, 160, 67, 0.2); color: var(--ok); }
+.badge.atencao { background: rgba(210, 153, 34, 0.2); color: var(--warn); }
+.badge.alarme { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
+.badge.desligada { background: rgba(139, 152, 165, 0.2); color: var(--muted); }
+
+.auth-box {
+  max-width: 380px;
+  margin: 80px auto;
+}
+
+.auth-logo {
+  display: block;
+  width: 100%;
+  height: 105px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 18px;
+}
+
+.auth-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.error { color: var(--danger); font-size: 0.85rem; }
+.info { color: var(--ok); font-size: 0.85rem; }
+.empty { color: var(--muted); text-align: center; padding: 40px 0; }
