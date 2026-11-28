@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Demonstracao local de Digital Twin e deteccao de anomalias em uma caldeira simulada."
+    />
+    <title>SafeLife | Digital Twin demonstrativo</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="SafeLife Digital Twin">
+          <span class="brand-mark">S</span>
+          <span>SafeLife <strong>Digital Twin</strong></span>
+        </a>
+        <div class="topbar-meta">
+          <span class="demo-tag">AMBIENTE DEMONSTRATIVO</span>
+          <span class="connection"><i id="connection-dot"></i><span id="connection-label">Conectando...</span></span>
+        </div>
+      </header>
+
+      <main>
+        <section class="page-heading">
+          <div>
+            <p class="eyebrow">MONITORAMENTO DE EQUIPAMENTO</p>
+            <h1>Caldeira industrial <span class="live-pill">SIMULAÇÃO</span></h1>
+            <p class="subheading">Telemetria sintética e detecção demonstrativa de anomalias.</p>
+          </div>
+          <div class="model-badge">
+            <span class="model-indicator"></span>
+            <div><small>MODELO ATIVO</small><strong>Isolation Forest</strong></div>
+          </div>
+        </section>
+
+        <section class="scenario-bar" aria-label="Cenarios de simulacao">
+          <div class="scenario-intro">
+            <span class="scenario-icon">◈</span>
+            <div><strong>Simular cenário</strong><small>Selecione para alterar as leituras gradualmente</small></div>
+          </div>
+          <div class="scenario-buttons">
+            <button class="scenario-button active" data-scenario="normal"><span class="button-dot normal-dot"></span>Operacao normal</button>
+            <button class="scenario-button" data-scenario="pump_failure"><span class="button-dot warning-dot"></span>Falha na bomba</button>
+            <button class="scenario-button" data-scenario="burner_overheat"><span class="button-dot critical-dot"></span>Superaquecimento</button>
+            <button class="scenario-button" data-scenario="overpressure"><span class="button-dot critical-dot"></span>Sobrepressao</button>
+          </div>
+        </section>
+
+        <section class="overview-grid">
+          <article class="card scene-card">
+            <div class="card-heading scene-heading">
+                <div><p class="eyebrow">MODELO INTERATIVO</p><h2>Visão da caldeira</h2></div>
+                <span class="orbit-hint">Arraste para girar · scroll para zoom</span>
+            </div>
+            <div id="scene-container" class="scene-container" aria-label="Modelo 3D interativo da caldeira">
+              <div class="scene-loading" id="scene-loading">Carregando modelo 3D...</div>
+              <div class="scene-legend"><span><i class="legend-dot green"></i>Normal</span><span><i class="legend-dot amber"></i>Atencao</span><span><i class="legend-dot red"></i>Critico</span></div>
+              <div class="scene-label label-boiler">CORPO / TUBULÃO</div>
+              <div class="scene-label label-burner">QUEIMADOR</div>
+              <div class="scene-label label-valve">VÁLVULA</div>
+              <div class="scene-label label-pump">BOMBA</div>
+            </div>
+            <div class="component-detail" id="component-detail">
+              <div class="detail-icon">◎</div>
+              <div class="detail-copy"><span>COMPONENTE SELECIONADO</span><strong id="detail-name">Clique em uma peça da caldeira</strong><small id="detail-reading">As leituras e o status aparecem aqui.</small></div>
+              <span class="detail-status status-normal" id="detail-status">NORMAL</span>
+            </div>
+          </article>
+
+          <aside class="card telemetry-card">
+            <div class="card-heading">
+              <div><p class="eyebrow">TELEMETRIA AO VIVO</p><h2>Leituras operacionais</h2></div>
+              <span class="live-indicator"><i></i> AO VIVO</span>
+            </div>
+            <div class="reading-grid">
+              <article class="reading-tile"><div class="reading-label"><span class="reading-symbol">P</span><span>Pressão</span></div><div class="reading-value"><strong id="reading-pressure">--.-</strong><span>bar</span></div><small>Referência: 10 bar</small></article>
+              <article class="reading-tile"><div class="reading-label"><span class="reading-symbol">T</span><span>Temp. dos gases</span></div><div class="reading-value"><strong id="reading-temperature">---</strong><span>°C</span></div><small>Referência: 180 °C</small></article>
+              <article class="reading-tile"><div class="reading-label"><span class="reading-symbol">N</span><span>Nível de água</span></div><div class="reading-value"><strong id="reading-water">--</strong><span>%</span></div><small>Referência: 60%</small></article>
+              <article class="reading-tile"><div class="reading-label"><span class="reading-symbol">F</span><span>Vazão da bomba</span></div><div class="reading-value"><strong id="reading-flow">--.-</strong><span>m³/h</span></div><small>Referência: 5 m³/h</small></article>
+              <article class="reading-tile"><div class="reading-label"><span class="reading-symbol">V</span><span>Vibração da bomba</span></div><div class="reading-value"><strong id="reading-vibration">-.-</strong><span>mm/s</span></div><small>Referência: 1,2 mm/s</small></article>
+            </div>
+            <div class="anomaly-panel">
+              <div class="anomaly-topline">              <div><span class="eyebrow">ÍNDICE DE ANOMALIA</span><strong class="anomaly-value"><span id="anomaly-value">0</span><small>/ 100</small></strong></div><span class="anomaly-status status-normal" id="anomaly-status">NORMAL</span></div>
+              <div class="meter-track"><div class="meter-fill" id="meter-fill"></div></div>
+              <p>Escala demonstrativa do Isolation Forest; <strong>não representa probabilidade de falha.</strong></p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="insights-grid">
+          <article class="card chart-card">
+            <div class="card-heading">
+              <div><p class="eyebrow">HISTÓRICO RECENTE</p><h2>Tendência das leituras</h2></div>
+              <span class="history-range">ÚLTIMOS 60 SEGUNDOS</span>
+            </div>
+            <div class="chart-legend">
+              <span><i style="--series:#58a6ff"></i>Pressao</span><span><i style="--series:#fb923c"></i>Temperatura</span><span><i style="--series:#36c99a"></i>Nivel</span><span><i style="--series:#b48aff"></i>Vazao</span><span><i style="--series:#f16a8a"></i>Vibracao</span>
+            </div>
+            <div class="chart-wrap"><canvas id="history-chart" aria-label="Grafico normalizado das ultimas leituras"></canvas><div class="chart-empty" id="chart-empty">Aguardando leituras da simulacao...</div></div>
+            <p class="chart-note">Series normalizadas para comparar tendencias; nao compartilham unidade.</p>
+          </article>
+
+          <article class="card alerts-card">
+            <div class="card-heading">
+              <div><p class="eyebrow">EXPLICABILIDADE</p><h2>Alertas recentes</h2></div>
+              <span class="alert-count" id="alert-count">0</span>
+            </div>
+            <div class="alert-list" id="alert-list"><div class="empty-alert"><span>✓</span><div><strong>Nenhum alerta ativo</strong><small>Alertas de simulação aparecerão aqui.</small></div></div></div>
+            <div class="alert-footnote">Diagnósticos baseados exclusivamente em dados sintéticos.</div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="disclaimer">
+        <span class="disclaimer-icon">i</span>
+        <p><strong>Demonstração educacional:</strong> leituras e diagnósticos são simulados. Não conectar a equipamento real nem usar para operação ou decisões de segurança.</p>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

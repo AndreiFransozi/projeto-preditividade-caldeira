@@ -2,42 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [mode, setMode] = useState("login");
-  const [error, setError] = useState("");
-  const [info, setInfo] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    setError("");
-    setInfo("");
-    setLoading(true);
-    const supabase = createClient();
-
-    if (mode === "login") {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) setError(error.message);
-      else {
-        router.push("/dashboard");
-        router.refresh();
-      }
-    } else {
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) setError(error.message);
-      else setInfo("Conta criada. Verifique seu e-mail para confirmar.");
-    }
-
-    setLoading(false);
+    router.push("/dashboard");
   }
 
   return (
@@ -47,45 +23,88 @@ export default function LoginPage() {
         src="/safelife-ai-logo.jpeg"
         alt="SafeLife AI"
       />
-      <h2>{mode === "login" ? "Entrar" : "Criar conta"}</h2>
-      <p className="sub">Monitoramento de caldeiras</p>
+      <div className="auth-header">
+        <h2>{mode === "login" ? "Acesso do Proprietário" : "Cadastro de Proprietário"}</h2>
+        <p className="sub">
+          {mode === "login"
+            ? "Entre para monitorar suas caldeiras e telemetria em tempo real"
+            : "Cadastre-se para gerenciar seus equipamentos e dados operacionais"}
+        </p>
+        <p className="sub">
+          Modo de visualização: login e cadastro não autenticam nem salvam dados.
+        </p>
+      </div>
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Senha (mín. 6 caracteres)"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength={6}
-          required
-        />
-        {error && <span className="error">{error}</span>}
-        {info && <span className="info">{info}</span>}
-        <button className="btn" disabled={loading}>
-          {loading ? "Aguarde..." : mode === "login" ? "Entrar" : "Cadastrar"}
+        {mode === "signup" && (
+          <>
+            <div className="form-group">
+              <label className="input-label">Nome Completo / Responsável</label>
+              <input
+                type="text"
+                placeholder="Ex: Carlos Silva"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="input-label">Empresa / Unidade Fabril</label>
+              <input
+                type="text"
+                placeholder="Ex: Indústria Alimentícia Beta"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+              />
+            </div>
+          </>
+        )}
+
+        <div className="form-group">
+          <label className="input-label">E-mail</label>
+          <input
+            type="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="input-label">Senha</label>
+          <input
+            type="password"
+            placeholder="Mínimo 6 caracteres"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength={6}
+            required
+          />
+        </div>
+
+        <button className="btn btn-primary btn-block">
+          {mode === "login" ? "Entrar no Painel" : "Criar Minha Conta de Proprietário"}
         </button>
       </form>
 
-      <p style={{ marginTop: 16, fontSize: "0.85rem" }}>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
+      <div className="auth-switch">
+        <button
+          type="button"
+          className="link-button"
+          onClick={() => {
             setMode(mode === "login" ? "signup" : "login");
           }}
         >
           {mode === "login"
-            ? "Não tem conta? Cadastre-se"
-            : "Já tem conta? Entrar"}
-        </a>
-      </p>
+            ? "Não tem conta? Cadastre-se como proprietário"
+            : "Já possui conta? Faça login aqui"}
+        </button>
+      </div>
+
+      <div className="auth-footer-tag">
+        🛡️ Monitoramento preditivo com conformidade NR-13
+      </div>
     </div>
   );
 }
