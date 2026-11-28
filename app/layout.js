@@ -1,4 +1,5 @@
 import "./globals.css";
+import { TipoCaldeiraProvider } from "@/contexts/TipoCaldeiraContext";
 
 export const metadata = {
   title: "SafeLife AI | Monitoramento",
@@ -8,7 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        <TipoCaldeiraProvider>{children}</TipoCaldeiraProvider>
+      </body>
     </html>
   );
 }
